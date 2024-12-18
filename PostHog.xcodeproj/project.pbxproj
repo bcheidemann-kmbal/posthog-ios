@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38B6BAF82D12251A0098B1C1 /* PostHogApiTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B6BAF72D1225150098B1C1 /* PostHogApiTest.swift */; };
 		3A0F108329C47940002C0084 /* UIViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0F108229C47940002C0084 /* UIViewExample.swift */; };
 		3A0F108529C9ABB6002C0084 /* ReadWriteLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0F108429C9ABB6002C0084 /* ReadWriteLock.swift */; };
 		3A0F108929C9BD76002C0084 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0F108829C9BD76002C0084 /* Errors.swift */; };
@@ -280,6 +281,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		38B6BAF72D1225150098B1C1 /* PostHogApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHogApiTest.swift; sourceTree = "<group>"; };
 		3A0F108229C47940002C0084 /* UIViewExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExample.swift; sourceTree = "<group>"; };
 		3A0F108429C9ABB6002C0084 /* ReadWriteLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadWriteLock.swift; sourceTree = "<group>"; };
 		3A0F108829C9BD76002C0084 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 			isa = PBXGroup;
 			children = (
 				3A62646829C9E37A007E8C07 /* TestUtils */,
+				38B6BAF72D1225150098B1C1 /* PostHogApiTest.swift */,
 				3AE3FB4A2993A68500AFFC18 /* PostHogStorageTest.swift */,
 				3A62647029CAF67B007E8C07 /* PostHogStorageManagerTest.swift */,
 				690FF0BA2AEF8B8200A0B06B /* PostHogContextTest.swift */,
@@ -1241,6 +1244,7 @@
 				690FF0DF2AEFBC5700A0B06B /* PostHogLegacyQueueTest.swift in Sources */,
 				690FF0BD2AEF93F400A0B06B /* PostHogFeatureFlagsTest.swift in Sources */,
 				690FF0E92AEFD3BD00A0B06B /* PostHogQueueTest.swift in Sources */,
+				38B6BAF82D12251A0098B1C1 /* PostHogApiTest.swift in Sources */,
 				3AE3FB4B2993A68500AFFC18 /* PostHogStorageTest.swift in Sources */,
 				3A580B4329E489D000C5C6F3 /* URLSession+body.swift in Sources */,
 			);
