@@ -14,11 +14,13 @@ import OHHTTPStubsSwift
 @testable import PostHog
 
 class MockPostHogServer {
+    var decideRequests = [URLRequest]()
     var batchRequests = [URLRequest]()
+    var snapshotRequests = [URLRequest]()
     var batchExpectation: XCTestExpectation?
     var decideExpectation: XCTestExpectation?
+    var snapshotExpectation: XCTestExpectation?
     var batchExpectationCount: Int?
-    var decideRequests = [URLRequest]()
 
     func trackBatchRequest(_ request: URLRequest) {
         batchRequests.append(request)
@@ -34,6 +36,12 @@ class MockPostHogServer {
         decideExpectation?.fulfill()
     }
 
+    func trackSnapshot(_ request: URLRequest) {
+        snapshotRequests.append(request)
+
+        snapshotExpectation?.fulfill()
+    }
+
     public var errorsWhileComputingFlags = false
     public var return500 = false
     public var returnReplay = false
@@ -43,7 +51,7 @@ class MockPostHogServer {
     public var replayVariantValue: Any = true
 
     init(port _: Int = 9001) {
-        stub(condition: isPath("/decide")) { _ in
+        stub(condition: pathEndsWith("/decide")) { _ in
             var flags = [
                 "bool-value": true,
                 "string-value": "test",
@@ -90,7 +98,15 @@ class MockPostHogServer {
             return HTTPStubsResponse(jsonObject: obj, statusCode: 200, headers: nil)
         }
 
-        stub(condition: isPath("/batch")) { _ in
+        stub(condition: pathEndsWith("/batch")) { _ in
+            if self.return500 {
+                HTTPStubsResponse(jsonObject: [], statusCode: 500, headers: nil)
+            } else {
+                HTTPStubsResponse(jsonObject: ["status": "ok"], statusCode: 200, headers: nil)
+            }
+        }
+
+        stub(condition: pathEndsWith("/s")) { _ in
             if self.return500 {
                 HTTPStubsResponse(jsonObject: [], statusCode: 500, headers: nil)
             } else {
@@ -99,10 +115,12 @@ class MockPostHogServer {
         }
 
         HTTPStubs.onStubActivation { request, _, _ in
-            if request.url?.path == "/batch" {
+            if request.url?.path.hasSuffix("/batch") == true {
                 self.trackBatchRequest(request)
-            } else if request.url?.path == "/decide" {
+            } else if request.url?.path.hasSuffix("/decide") == true {
                 self.trackDecide(request)
+            } else if request.url?.path.hasSuffix("/s") == true {
+                self.trackSnapshot(request);
             }
         }
     }
@@ -124,6 +142,7 @@ class MockPostHogServer {
         decideRequests = []
         batchExpectation = XCTestExpectation(description: "\(batchCount) batch requests to occur")
         decideExpectation = XCTestExpectation(description: "1 decide requests to occur")
+        snapshotExpectation = XCTestExpectation(description: "1 snapshot requests to occur")
         batchExpectationCount = batchCount
         errorsWhileComputingFlags = false
         return500 = false

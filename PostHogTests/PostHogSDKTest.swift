@@ -607,7 +607,7 @@ class PostHogSDKTest: QuickSpec {
 
             sut.reloadFeatureFlags()
 
-            let requests = getDecideRequest(server)
+            let requests = getDecideRequestsParsed(server)
 
             expect(requests.count) == 1
             let request = requests.first
